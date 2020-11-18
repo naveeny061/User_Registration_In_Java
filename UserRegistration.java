@@ -22,6 +22,12 @@ public class UserRegistration {
 		Pattern pattern = Pattern.compile(expression);
 		return pattern.matcher(email).matches();
 	}
+	
+	public boolean validateMobile(String mobile) {
+		String expression = "^[+]?[0-9]{2}[ ][0-9]{10}$";
+		Pattern pattern = Pattern.compile(expression);
+		return pattern.matcher(mobile).matches();
+	}
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
@@ -60,6 +66,18 @@ public class UserRegistration {
 				break;
 			} else {
 				System.out.println("Please enter valid email address");
+			}
+		}
+		
+		while (true) {
+			System.out.println("Enter Mobile Number");
+			String mobile = scanner.nextLine();
+			boolean check = user.validateMobile(mobile);
+			if (check) {
+				System.out.println(user.validateMobile(mobile));
+				break;
+			} else {
+				System.out.println("Please enter valid mobile number");
 			}
 		}
 	}
