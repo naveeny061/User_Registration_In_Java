@@ -4,100 +4,80 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class UserRegistration {
+	Scanner scanner = new Scanner(System.in);
 
-	public boolean validateFirstName(String firstname) {
+	public void validateFirstName() throws UserRegistrationException {
+		System.out.println("Enter First Name");
+		String firstName = scanner.nextLine();
 		String expression = "^[A-Z][a-z]{2,}$";
 		Pattern pattern = Pattern.compile(expression);
-		return pattern.matcher(firstname).matches();
+		boolean result = pattern.matcher(firstName).matches();
+		if (result)
+			System.out.println(result);
+		else
+			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID, "Invalid First Name");
 	}
 
-	public boolean validateLastName(String lastname) {
+	public void validateLastName() throws UserRegistrationException {
+		System.out.println("Enter Last Name");
+		String lastName = scanner.nextLine();
 		String expression = "^[A-Z][a-z]{2,}$";
 		Pattern pattern = Pattern.compile(expression);
-		return pattern.matcher(lastname).matches();
+		boolean result = pattern.matcher(lastName).matches();
+		if (result)
+			System.out.println(result);
+		else
+			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID, "Invalid Last Name");
 	}
 
-	public boolean validateEmail(String email) {
+	public boolean validateEmail() throws UserRegistrationException {
+		System.out.println("Enter Email");
+		String email = scanner.nextLine();
 		String expression = "^[a-zA-Z][a-zA-Z0-9]*([.+-][a-zA-Z0-9]+)*(@[a-zA-Z0-9]+[.][a-zA-Z0-9]{2,})([.][a-zA-Z]{2,4})?$";
 		Pattern pattern = Pattern.compile(expression);
-		return pattern.matcher(email).matches();
+		boolean result = pattern.matcher(email).matches();
+		if (result) {
+			System.out.println(result);
+			return result;}
+		else
+			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID, "Invalid Email");
+
 	}
 
-	public boolean validateMobile(String mobile) {
+	public void validateMobile() throws UserRegistrationException {
+		System.out.println("Enter Mobile Number");
+		String mobile = scanner.nextLine();
 		String expression = "^[+]?[0-9]{2}[ ][0-9]{10}$";
 		Pattern pattern = Pattern.compile(expression);
-		return pattern.matcher(mobile).matches();
+		boolean result = pattern.matcher(mobile).matches();
+		if (result)
+			System.out.println(result);
+		else
+			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID,
+					"Invalid Mobile Number");
 	}
 
-	public boolean validatePassword(String password) {
+	public void validatePassword() throws UserRegistrationException {
+		System.out.println("Enter Password");
+		String password = scanner.nextLine();
 		String expression = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?!(?:.*[!@#$%^&*]){2})[a-zA-Z0-9!@#$%^&*]{8,}$";
 		Pattern pattern = Pattern.compile(expression);
-		return pattern.matcher(password).matches();
+		boolean result = pattern.matcher(password).matches();
+		if (result)
+			System.out.println(result);
+		else
+			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID, "Invalid Password");
 	}
 
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
+	public static void main(String[] args) throws UserRegistrationException {
+
 		UserRegistration user = new UserRegistration();
 		System.out.println("Welcome to User Registration System ");
-		while (true) {
-			System.out.println("Enter First Name");
-			String firstName = scanner.nextLine();
-			boolean check = user.validateFirstName(firstName);
-			if (check) {
-				System.out.println(user.validateFirstName(firstName));
-				break;
-			} else {
-				System.out.println("Please enter valid first name ");
-			}
-		}
+		user.validateFirstName();
+		user.validateLastName();
+		user.validateEmail();
+		user.validateMobile();
+		user.validatePassword();
 
-		while (true) {
-			System.out.println("Enter Last Name");
-			String lastName = scanner.nextLine();
-			boolean check = user.validateFirstName(lastName);
-			if (check) {
-				System.out.println(user.validateFirstName(lastName));
-				break;
-			} else {
-				System.out.println("Please enter valid last name");
-			}
-		}
-
-		while (true) {
-			System.out.println("Enter Email");
-			String email = scanner.nextLine();
-			boolean check = user.validateEmail(email);
-			if (check) {
-				System.out.println(user.validateEmail(email));
-				break;
-			} else {
-				System.out.println("Please enter valid email address");
-			}
-		}
-
-		while (true) {
-			System.out.println("Enter Mobile Number");
-			String mobile = scanner.nextLine();
-			boolean check = user.validateMobile(mobile);
-			if (check) {
-				System.out.println(user.validateMobile(mobile));
-				break;
-			} else {
-				System.out.println("Please enter valid mobile number");
-			}
-		}
-
-		while (true) {
-			System.out.println("Enter Password");
-			String password = scanner.nextLine();
-			boolean check = user.validatePassword(password);
-			if (check) {
-				System.out.println(user.validatePassword(password));
-				break;
-			} else {
-				System.out.println("Please enter valid password");
-			}
-		}
 	}
-
 }
