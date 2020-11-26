@@ -3,81 +3,111 @@ package pattern;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+@FunctionalInterface
+interface IValidateFunction {
+	boolean validate(String x);
+}
+
 public class UserRegistration {
-	Scanner scanner = new Scanner(System.in);
 
-	public void validateFirstName() throws UserRegistrationException {
-		System.out.println("Enter First Name");
-		String firstName = scanner.nextLine();
+	IValidateFunction firstNameValidation = (x) -> {
 		String expression = "^[A-Z][a-z]{2,}$";
 		Pattern pattern = Pattern.compile(expression);
-		boolean result = pattern.matcher(firstName).matches();
+		boolean result = pattern.matcher(x).matches();
 		if (result)
-			System.out.println(result);
+			return result;
 		else
-			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID, "Invalid First Name");
-	}
-
-	public void validateLastName() throws UserRegistrationException {
-		System.out.println("Enter Last Name");
-		String lastName = scanner.nextLine();
+			try {
+				throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID,
+						"Invalid First Name");
+			} catch (UserRegistrationException e) {
+				e.printStackTrace();
+			}
+		return result;
+	};
+	IValidateFunction lastNameValidation = (x) -> {
 		String expression = "^[A-Z][a-z]{2,}$";
 		Pattern pattern = Pattern.compile(expression);
-		boolean result = pattern.matcher(lastName).matches();
+		boolean result = pattern.matcher(x).matches();
 		if (result)
-			System.out.println(result);
+			return result;
 		else
-			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID, "Invalid Last Name");
-	}
+			try {
+				throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID,
+						"Invalid Last Name");
+			} catch (UserRegistrationException e) {
+				e.printStackTrace();
+			}
+		return result;
+	};
 
-	public boolean validateEmail() throws UserRegistrationException {
-		System.out.println("Enter Email");
-		String email = scanner.nextLine();
+	IValidateFunction emailValidation = (x) -> {
 		String expression = "^[a-zA-Z][a-zA-Z0-9]*([.+-][a-zA-Z0-9]+)*(@[a-zA-Z0-9]+[.][a-zA-Z0-9]{2,})([.][a-zA-Z]{2,4})?$";
 		Pattern pattern = Pattern.compile(expression);
-		boolean result = pattern.matcher(email).matches();
-		if (result) {
-			System.out.println(result);
-			return result;}
+		boolean result = pattern.matcher(x).matches();
+		if (result)
+			return result;
 		else
-			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID, "Invalid Email");
+			try {
+				throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID, "Invalid Email");
+			} catch (UserRegistrationException e) {
+				e.printStackTrace();
+			}
+		return result;
+	};
 
-	}
-
-	public void validateMobile() throws UserRegistrationException {
-		System.out.println("Enter Mobile Number");
-		String mobile = scanner.nextLine();
+	IValidateFunction mobileValidation = (x) -> {
 		String expression = "^[+]?[0-9]{2}[ ][0-9]{10}$";
 		Pattern pattern = Pattern.compile(expression);
-		boolean result = pattern.matcher(mobile).matches();
+		boolean result = pattern.matcher(x).matches();
 		if (result)
-			System.out.println(result);
+			return result;
 		else
-			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID,
-					"Invalid Mobile Number");
-	}
+			try {
+				throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID,
+						"Invalid Mobile number");
+			} catch (UserRegistrationException e) {
+				e.printStackTrace();
+			}
+		return result;
+	};
 
-	public void validatePassword() throws UserRegistrationException {
-		System.out.println("Enter Password");
-		String password = scanner.nextLine();
+	IValidateFunction passwordValidation = (x) -> {
 		String expression = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?!(?:.*[!@#$%^&*]){2})[a-zA-Z0-9!@#$%^&*]{8,}$";
 		Pattern pattern = Pattern.compile(expression);
-		boolean result = pattern.matcher(password).matches();
+		boolean result = pattern.matcher(x).matches();
 		if (result)
-			System.out.println(result);
+			return result;
 		else
-			throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID, "Invalid Password");
-	}
+			try {
+				throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID,
+						"Invalid Password");
+			} catch (UserRegistrationException e) {
+				e.printStackTrace();
+			}
+		return result;
+	};
 
 	public static void main(String[] args) throws UserRegistrationException {
 
 		UserRegistration user = new UserRegistration();
-		System.out.println("Welcome to User Registration System ");
-		user.validateFirstName();
-		user.validateLastName();
-		user.validateEmail();
-		user.validateMobile();
-		user.validatePassword();
+		Scanner scanner = new Scanner(System.in);
 
+		System.out.println("Welcome to User Registration System ");
+		System.out.println("Enter First Name");
+		String firstName = scanner.nextLine();
+		user.firstNameValidation.validate(firstName);
+		System.out.println("Enter Last Name");
+		String lastName = scanner.nextLine();
+		user.lastNameValidation.validate(lastName);
+		System.out.println("Enter Email");
+		String email = scanner.nextLine();
+		user.emailValidation.validate(email);
+		System.out.println("Enter Mobile Number");
+		String mobile = scanner.nextLine();
+		user.mobileValidation.validate(mobile);
+		System.out.println("Enter Password");
+		String password = scanner.nextLine();
+		user.passwordValidation.validate(password);
 	}
 }

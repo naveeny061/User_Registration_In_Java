@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,7 @@ public class UserRegistrationParamtrizedTest {
 	private UserRegistration userRegistration;
 
 	public UserRegistrationParamtrizedTest(String email, boolean expectedResult) {
-		//super();
+		super();
 		this.email = email;
 		this.expectedResult = expectedResult;
 	}
@@ -35,11 +36,11 @@ public class UserRegistrationParamtrizedTest {
 				{ "abc.100@abc.com.au", true }, { "abc@1.com", true }, { "abc@gmail.com.com", true },
 				{ "abc+100@gmail.com", true }, { "abc1.com", false }, { "abc@.1.com", false }, { "abc@1.c", false },
 				{ ".abc@1.com", false }, { "abc()@1.com", false }, { "abc@1..com", false }, { "abc.@1.com", false },
-				{ "ab@c@1.com", false}, { "abc@1.1om.p1", false }, { "abc@1.com.co.in", false } });
+				{ "ab@c@1.com", false }, { "abc@1.1om.p1", false }, { "abc@1.com.co.in", false } });
 	}
 
-	/*@Test
+	@Test
 	public void testUserRegistrationTest() {
-		assertEquals(expectedResult, userRegistration.validateEmail());
-	}*/
+		assertEquals(expectedResult, userRegistration.emailValidation.validate(email));
+	}
 }
